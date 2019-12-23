@@ -1,16 +1,31 @@
 <template>
   <div class="home">
-    <div class="greeting">
-      <span class="price"
-        >Hallo, Alex! Zur Zeit kannst du 1 BTC für
-        <span :class="{ 'loading-money': loading }">{{ buy_price }} EUR</span>
+    <div v-if="!loading" class="greeting">
+      <span class="price">
+        Hallo, Alex! Zur Zeit kannst du 1 BTC für
+        <span :class="{ 'loading-money': loading }">
+          {{ buy_price.toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+          }) }} EUR
+        </span>
         kaufen und für
-        <span :class="{ 'loading-money': loading }">{{ buy_price }} EUR</span>
-        verkaufen.</span
-      >
+        <span :class="{ 'loading-money': loading }">
+          {{ sell_price.toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+          }) }} EUR
+        </span>
+        verkaufen.
+      </span>
     </div>
     <div class="overview">
-      <Balance class="balance" />
+      <Balance
+        @click.native="$router.push({ path: 'mybitcoin' })"
+        v-if="!loading"
+        :curr_price="buy_price"
+        class="balance"
+      />
       <BuySell :curr_buy_price="buy_price" :curr_sell_price="sell_price" />
     </div>
   </div>
@@ -33,40 +48,33 @@ export default {
       baseURL: "https://blockchain.info",
       buy_price: null,
       sell_price: null,
-      loading: true
+      loading: true,
+      stopPolling: false
     };
   },
   methods: {
     pollData() {
-      this.polling = setInterval(() => {
-        axios
-          .get(`${this.baseURL}/ticker`)
-          .then(response => {
-            this.buy_price = response.data.EUR.buy;
-            this.sell_price = response.data.EUR.sell;
-            this.loading = false;
-          })
-          .catch(error => {
-            console.log(error);
-          });
-      }, 3000);
+      // Prevent polling after element is destroyed / different page was loaded
+      if (this.stopPolling) return;
+      // Get bitcoin price via API every 10 seconds
+      axios
+        .get(`${this.baseURL}/ticker`)
+        .then(response => {
+          this.buy_price = response.data.EUR.buy;
+          this.sell_price = response.data.EUR.sell;
+          this.loading = false;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      setTimeout(this.pollData, 10000);
     }
   },
-  beforeDestroy() {
-    clearInterval(this.polling);
-  },
   created() {
-    axios
-      .get(`${this.baseURL}/ticker`)
-      .then(response => {
-        this.buy_price = response.data.EUR.buy;
-        this.sell_price = response.data.EUR.sell;
-        this.loading = false;
-      })
-      .catch(error => {
-        console.log(error);
-      });
     this.pollData();
+  },
+  beforeDestroy() {
+    this.stopPolling = true;
   }
 };
 </script>

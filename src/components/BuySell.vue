@@ -10,7 +10,9 @@
         @input="btc_buy_transform"
         type="text"
         id="btcinput"
-        placeholder
+        placeholder="0"
+        onfocus="this.placeholder = ''"
+        onblur="this.placeholder = '0'"
       />
       <span>BTC</span>
       <span class="fuer">für</span>
@@ -26,7 +28,9 @@
         v-model.number="btc_sell_quantity"
         type="text"
         id="btcinput"
-        placeholder
+        placeholder="0"
+        onfocus="this.placeholder = ''"
+        onblur="this.placeholder = '0'"
       />
       <span>BTC</span>
       <span class="fuer">für</span>
@@ -45,8 +49,8 @@ export default {
     return {
       action_buy_price_eur: 0.0,
       action_sell_price_eur: 0.0,
-      btc_buy_quantity: 0,
-      btc_sell_quantity: 0
+      btc_buy_quantity: null,
+      btc_sell_quantity: null
     };
   },
   methods: {
@@ -154,20 +158,10 @@ $muted-text-color: rgba(
 }
 
 input[type="text"] {
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid $text-color;
-  color: $text-color;
   width: 7rem;
   font-size: 1.5rem;
-  font-weight: bold;
-  text-align: center;
   padding: 5px 0px;
   margin-right: 10px;
-
-  &:focus {
-    outline: 3px solid transparent;
-  }
 }
 
 .top-bar {
