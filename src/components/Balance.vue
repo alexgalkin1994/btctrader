@@ -41,14 +41,27 @@ export default {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
       });
+    },
+    currentEURPrice() {
+      const BTCamount = localStorage.getItem("wallet");
+      this.currentBTCBalance = BTCamount;
+
+      let currEURPrice = BTCamount * parseFloat(this.curr_price);
+      this.currentEURBalance = currEURPrice.toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
     }
   },
-  created() {},
+  created() {
+    this.localizedBTC();
+    this.currentEURPrice();
+  },
   computed: {},
   watch: {
     curr_price(newPrice, oldPrice) {
       const BTCamount = localStorage.getItem("wallet");
-      console.log("fr", BTCamount);
+      console.log("nbtc", BTCamount);
       this.currentBTCBalance = BTCamount;
 
       let currEURPrice = BTCamount * parseFloat(newPrice);
