@@ -23,13 +23,15 @@ export default {
 <style scoped lang="scss">
 .container {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   box-sizing: border-box;
-  margin-bottom: 40px;
   background-image: linear-gradient(45deg, #7a4bfd 0%, #ef7ec4 100%);
   border-radius: 10px;
   padding: 30px;
   width: 100%;
-  height: 165px;
+  height: 145px;
   box-shadow: 3px 4px 5px rgba($color: #0e0e0e, $alpha: 0.7);
   cursor: pointer;
   transition: all 0.3s;

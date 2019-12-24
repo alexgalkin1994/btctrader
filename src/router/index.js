@@ -38,6 +38,11 @@ const routes = [
     path: "/mybitcoin",
     name: "mybitcoin",
     component: () => import("../views/MyBitcoin.vue")
+  },
+  {
+    path: "/profile",
+    name: "profile",
+    component: () => import("../views/Profile.vue")
   }
 ];
 

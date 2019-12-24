@@ -3,7 +3,11 @@
     <!-- <div class="title">Details</div> -->
     <div class="content">
       <!-- loop over stats array to get all the avaiable stats -->
-      <DetailContainer v-for="detail in details" :key="detail.id" :detail="detail" />
+      <DetailContainer
+        v-for="detail in details"
+        :key="detail.id"
+        :detail="detail"
+      />
     </div>
   </div>
 </template>
@@ -80,11 +84,14 @@ export default {
             const hashrateRes = responses[4];
             const getdifficultyRes = responses[5];
 
+            const satoshi = 100000000;
             this.details[0].amount =
               marketcapRes.data.toLocaleString() + " EUR";
-            this.details[1].amount = totalbcRes.data.toLocaleString() + " BTC";
+            this.details[1].amount =
+              (totalbcRes.data / satoshi).toLocaleString() + " BTC";
             this.details[2].amount = transactioncountRes.data.toLocaleString();
-            this.details[3].amount = btcsentRes.data.toLocaleString() + " BTC";
+            this.details[3].amount =
+              (btcsentRes.data / satoshi).toLocaleString() + " BTC";
             this.details[4].amount =
               hashrateRes.data.toLocaleString() + " EH/s";
             this.details[5].amount = getdifficultyRes.data.toLocaleString();
@@ -108,17 +115,22 @@ export default {
 
 <style lang="scss" scoped>
 .details {
-  max-width: 1024px;
+  width: 100%;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+.container {
+  margin: 0;
+}
 .content {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 25px;
   justify-content: center;
-  align-items: center;
+  align-content: center;
   padding: 65px 0;
 }
 
@@ -126,9 +138,5 @@ export default {
   font-size: 3rem;
   font-weight: 300;
   margin: 30px 0;
-}
-
-DetailContainer {
-  margin-bottom: 40px;
 }
 </style>

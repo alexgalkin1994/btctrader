@@ -3,12 +3,12 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faSync, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faSync, faTimes, faClock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import VueCharts from "vue-chartjs";
 import Chart from "chart.js";
 
-library.add(faSync, faTimes);
+library.add(faSync, faTimes, faClock);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 

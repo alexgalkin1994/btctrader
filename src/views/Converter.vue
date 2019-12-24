@@ -1,25 +1,32 @@
 <template>
   <div class="content">
-    <input
-      v-model="fiat_input"
-      placeholder="0"
-      onfocus="this.placeholder = ''"
-      onblur="this.placeholder = '0'"
-      @input="searchTimeOut"
-      type="text"
-    />
-    <div class="select-dropdown">
-      <select @change="searchTimeOut" v-model="selected">
-        <option value="EUR" selected>EUR</option>
-        <option value="USD">USD</option>
-        <option value="AUD">AUD</option>
-        <option value="NZD">NZD</option>
-        <option value="GBP">GBP</option>
-      </select>
+    <div class="inputs">
+      <input
+        v-model="fiat_input"
+        placeholder="0"
+        onfocus="this.placeholder = ''"
+        onblur="this.placeholder = '0'"
+        @input="searchTimeOut"
+        type="text"
+      />
+      <div class="select-dropdown">
+        <select @change="searchTimeOut" v-model="selected">
+          <option value="EUR" selected>EUR</option>
+          <option value="USD">USD</option>
+          <option value="AUD">AUD</option>
+          <option value="NZD">NZD</option>
+          <option value="GBP">GBP</option>
+        </select>
+      </div>
     </div>
 
-    <font-awesome-icon class="sync-icon" icon="sync" />
-    <span class="btc-output">{{ btc_output }} BTC</span>
+    <font-awesome-icon
+      :class="{ spin: spin }"
+      @animationend="spin = false"
+      class="sync-icon"
+      icon="sync"
+    />
+    <div class="btc-output">{{ btc_output }} BTC</div>
   </div>
 </template>
 
@@ -31,7 +38,8 @@ export default {
     return {
       selected: "EUR",
       fiat_input: null,
-      btc_output: 0
+      btc_output: 0,
+      spin: false
     };
   },
   methods: {
@@ -48,6 +56,7 @@ export default {
     convertToBTC() {
       const currency = this.selected;
       let value = this.fiat_input;
+      this.spin = true;
       if (this.fiat_input != null && this.fiat_input != "") {
         axios
           .get("https://blockchain.info/tobtc", {
@@ -60,7 +69,6 @@ export default {
             this.btc_output = parseFloat(
               response.data.toString().replace(/,/g, "")
             ).toLocaleString();
-            console.log(this.btc_output);
           })
           .catch(function(error) {
             console.log(error);
@@ -81,15 +89,38 @@ $muted-text-color: rgba(
   $alpha: 0.7
 );
 
+.fade-enter-active {
+  transition: opacity 1.5s;
+}
+.fade-leave-active {
+  opacity: 0;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
 .content {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+  justify-items: center;
   align-items: center;
   height: 100%;
   width: 100%;
   font-size: 3rem;
   font-weight: bold;
-  overflow: hidden;
+  overflow: auto;
+}
+
+.inputs {
+  display: flex;
+  justify-self: end;
+}
+
+.btc-output {
+  justify-self: baseline;
+  white-space: nowrap;
 }
 
 .select-dropdown {
@@ -129,6 +160,15 @@ $muted-text-color: rgba(
 
 .sync-icon {
   margin: 0 75px;
+}
+
+.spin {
+  animation: spin 1s cubic-bezier(0.715, 0.005, 0.07, 1);
+}
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .btc-output {

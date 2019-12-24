@@ -11,6 +11,7 @@
         <router-link to="/converter">Umrechner</router-link>
         <router-link to="/diagram">Diagramm</router-link>
         <router-link to="/mybitcoin">Mein Bitcoin</router-link>
+        <router-link to="/profile">Profil</router-link>
       </div>
     </div>
 
@@ -92,6 +93,48 @@ body {
   }
 }
 
+.notification {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  bottom: 30px;
+  right: 0;
+  left: 0;
+  margin-right: auto;
+  margin-left: auto;
+  width: fit-content;
+  border-radius: 5px;
+  padding: 20px 30px 20px 20px;
+  height: 50px;
+  font-size: 1rem;
+  white-space: pre-wrap;
+
+  background-image: linear-gradient(
+    44deg,
+    rgba($color: #e83785, $alpha: 0.9) 0%,
+    rgba($color: #71eeee, $alpha: 0.9) 100%
+  );
+  transition: all 0.3s;
+  &:hover {
+    background-image: linear-gradient(
+      44deg,
+      rgba($color: #e83785, $alpha: 1) 0%,
+      rgba($color: #71eeee, $alpha: 1) 100%
+    );
+  }
+}
+
+.close-button {
+  position: absolute;
+  top: 2px;
+  right: 7px;
+  color: $text-color;
+  text-decoration: none;
+  opacity: 0.9;
+  cursor: pointer;
+}
+
 input[type="text"] {
   background: transparent;
   border: none;
@@ -123,5 +166,39 @@ input[type="text"] {
 .fade-enter,
 .fade-leave-active {
   opacity: 0;
+}
+
+.slide-fade-enter-active {
+  transition: all 0.3s ease;
+}
+.slide-fade-leave-active {
+  transition: all 0.8s cubic-bezier(0.02, 0.9, 0.49, 1.06);
+}
+.slide-fade-enter,
+.slide-fade-leave-to {
+  transform: translateY(30px);
+  opacity: 0;
+}
+
+.button {
+  display: flex;
+  box-shadow: 1px 2px 3px rgba($color: #0e0e0e, $alpha: 0.5);
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  width: 7rem;
+  height: 2rem;
+  font-weight: 400;
+  font-size: 1rem;
+  text-decoration: none;
+  color: $text-color;
+  text-align: center;
+  margin-left: auto;
+  transition: all 0.3s;
+  cursor: pointer;
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 2px 4px 4px rgba($color: #0e0e0e, $alpha: 0.5);
+  }
 }
 </style>

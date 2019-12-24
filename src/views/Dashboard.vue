@@ -1,23 +1,7 @@
 <template>
   <div class="home">
     <div v-if="!loading" class="greeting">
-      <span class="price">
-        Hallo, Alex! Zur Zeit kannst du 1 BTC für
-        <span :class="{ 'loading-money': loading }">
-          {{ buy_price.toLocaleString(undefined, {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2
-          }) }} EUR
-        </span>
-        kaufen und für
-        <span :class="{ 'loading-money': loading }">
-          {{ sell_price.toLocaleString(undefined, {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2
-          }) }} EUR
-        </span>
-        verkaufen.
-      </span>
+      <span class="price">Hallo, {{ userFirstName }}!</span>
     </div>
     <div class="overview">
       <Balance
@@ -26,7 +10,8 @@
         :curr_price="buy_price"
         class="balance"
       />
-      <BuySell :curr_buy_price="buy_price" :curr_sell_price="sell_price" />
+      <!-- <BuySell :curr_buy_price="buy_price" :curr_sell_price="sell_price" /> -->
+      <PriceOverview :currentPrices="currentPrices" />
     </div>
   </div>
 </template>
@@ -34,13 +19,15 @@
 <script>
 import Balance from "@/components/Balance.vue";
 import BuySell from "@/components/BuySell.vue";
+import PriceOverview from "@/components/PriceOverview.vue";
 import axios from "axios";
 
 export default {
   name: "home",
   components: {
     Balance,
-    BuySell
+    BuySell,
+    PriceOverview
   },
   data() {
     return {
@@ -49,7 +36,9 @@ export default {
       buy_price: null,
       sell_price: null,
       loading: true,
-      stopPolling: false
+      stopPolling: false,
+      currentPrices: {},
+      userFirstName: "Gast"
     };
   },
   methods: {
@@ -63,6 +52,7 @@ export default {
           this.buy_price = response.data.EUR.buy;
           this.sell_price = response.data.EUR.sell;
           this.loading = false;
+          this.currentPrices = response.data;
         })
         .catch(error => {
           console.log(error);
@@ -72,6 +62,8 @@ export default {
   },
   created() {
     this.pollData();
+    const user = JSON.parse(localStorage.getItem("user"));
+    this.userFirstName = user.firstName;
   },
   beforeDestroy() {
     this.stopPolling = true;
@@ -80,6 +72,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.home {
+  width: 100%;
+}
 .greeting {
   margin: 65px 0px;
 
