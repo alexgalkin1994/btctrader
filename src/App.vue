@@ -14,10 +14,11 @@
         <router-link to="/profile">Profil</router-link>
       </div>
     </div>
-
-    <transition name="fade" mode="out-in">
-      <router-view />
-    </transition>
+    <div class="main-window-view">
+      <transition name="fade" mode="out-in">
+        <router-view />
+      </transition>
+    </div>
   </div>
 </template>
 
@@ -55,6 +56,10 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.main-window-view {
+  width: 100%;
+  max-width: 1340px;
 }
 
 #nav {
