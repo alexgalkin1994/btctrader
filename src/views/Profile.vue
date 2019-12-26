@@ -1,13 +1,13 @@
 <template>
   <div class="content">
     <div class="form">
-      <span>First Name:</span>
+      <span>Vorname:</span>
       <input v-model="user.firstName" type="text" />
 
-      <span>Last Name:</span>
+      <span>Nachname:</span>
       <input v-model="user.lastName" type="text" />
 
-      <span>Age:</span>
+      <span>Alter:</span>
       <input v-model="user.age" type="text" />
     </div>
 
