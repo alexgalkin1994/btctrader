@@ -95,7 +95,7 @@ $muted-text-color: rgba(
   width: fit-content;
   height: 250px;
   background-image: linear-gradient(320deg, #7a4bfd 0%, #ef7ec4 80%);
-  box-shadow: 3px 4px 5px rgba($color: #0e0e0e, $alpha: 0.7);
+  box-shadow: 3px 4px 5px rgba($color: #0e0e0e, $alpha: 0.1);
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.3s;

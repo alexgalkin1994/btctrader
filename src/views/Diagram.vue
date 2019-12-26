@@ -5,6 +5,7 @@
       <div class="stat-options option-to-select">
         <label
           ><input
+            class="radio-input"
             type="radio"
             id="market-price"
             value="market-price"
@@ -16,6 +17,7 @@
 
         <label
           ><input
+            class="radio-input"
             type="radio"
             id="total-bitcoins"
             value="total-bitcoins"
@@ -29,6 +31,7 @@
 
         <label
           ><input
+            class="radio-input"
             type="radio"
             id="n-transactions"
             value="n-transactions"
@@ -40,6 +43,7 @@
 
         <label
           ><input
+            class="radio-input"
             type="radio"
             id="market-cap"
             value="market-cap"
@@ -51,6 +55,7 @@
 
         <label
           ><input
+            class="radio-input"
             type="radio"
             id="hash-rate"
             value="hash-rate"
@@ -62,6 +67,7 @@
 
         <label>
           <input
+            class="radio-input"
             type="radio"
             id="difficulty"
             value="difficulty"
@@ -77,6 +83,7 @@
       <div class="timespan-options option-to-select">
         <label
           ><input
+            class="radio-input"
             type="radio"
             id="30days"
             value="30days"
@@ -88,6 +95,7 @@
 
         <label
           ><input
+            class="radio-input"
             type="radio"
             id="60days"
             value="60days"
@@ -99,6 +107,7 @@
 
         <label
           ><input
+            class="radio-input"
             type="radio"
             id="180days"
             value="180days"
@@ -110,6 +119,7 @@
 
         <label
           ><input
+            class="radio-input"
             type="radio"
             id="1year"
             value="1year"
@@ -121,6 +131,7 @@
 
         <label
           ><input
+            class="radio-input"
             type="radio"
             id="2years"
             value="2years"
@@ -132,6 +143,7 @@
 
         <label
           ><input
+            class="radio-input"
             type="radio"
             id="all"
             value="all"

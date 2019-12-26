@@ -29,11 +29,11 @@ export default {
 
 <style scoped lang="scss">
 .table-content {
-  height: 250px;
+  height: 100%;
+  overflow: auto;
   width: 100%;
   position: relative;
-  overflow: auto;
-  height: 100%;
+  box-sizing: border-box;
 }
 table {
   border-collapse: collapse;
@@ -42,7 +42,6 @@ table {
   overflow: hidden;
   text-align: center;
   width: 100%;
-  height: 100%;
 
   thead {
   }
@@ -50,8 +49,8 @@ table {
   thead tr {
     background-image: linear-gradient(
       340deg,
-      rgba($color: #26b681, $alpha: 0.45) 0%,
-      rgba($color: #71eeee, $alpha: 0.45) 100%
+      rgba($color: #00ffa2, $alpha: 0.7) 0%,
+      rgba($color: #71eeee, $alpha: 0.7) 100%
     );
     font-weight: bold;
   }

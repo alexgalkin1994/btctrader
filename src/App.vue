@@ -250,11 +250,11 @@ input[type="text"] {
   }
 }
 
-input {
+.radio-input {
   display: none;
 }
 
-input:checked + .radio-span {
+.radio-input:checked + .radio-span {
   background: #7a4bfd;
   color: $text-color;
 }

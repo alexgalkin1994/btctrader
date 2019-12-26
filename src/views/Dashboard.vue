@@ -73,20 +73,27 @@ export default {
 <style lang="scss" scoped>
 .home {
   width: 100%;
-  height: 100%;
+  height: 60vh;
+  margin: 65px 0px;
   display: grid;
-  grid-template-areas:
-    "greeting price-overview price-overview price-overview"
-    "balance price-overview price-overview price-overview";
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  box-sizing: border-box;
 }
 
 .price-overview {
-  grid-area: price-overview;
-  margin: 65px 0px;
+  max-width: 100%;
+  max-height: 100%;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 3;
 }
 .greeting {
-  grid-area: greeting;
-  margin: 65px 0px;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
 
   span {
     font-size: 3rem;
@@ -103,7 +110,11 @@ export default {
 
 .balance {
   margin-right: 70px;
-  grid-area: balance;
+  align-self: end;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 2;
+  grid-row-end: 3;
 }
 
 .loading-money {
