@@ -6,6 +6,7 @@
         v-for="(transaction, index) in allTransactions"
         :key="`transaction-${index}`"
       >
+        <!-- Check if btc was added or removed from the balance -->
         <div
           v-if="transaction.posneg == 'positive'"
           class="positive-transaction transaction"
@@ -43,6 +44,7 @@ export default {
     };
   },
   methods: {
+    // Make the date readable
     localizedDate(date) {
       const localizedDate = new Date(date).toLocaleDateString();
       const localizedTime = new Date(date).toLocaleTimeString();
@@ -50,6 +52,7 @@ export default {
     }
   },
   computed: {
+    // Reverse the list to show the last transaction first
     allTransactions() {
       let transactions = this.transactionHistory;
       return transactions.slice().reverse();

@@ -1,6 +1,7 @@
 <template>
   <div class="table-content">
     <table>
+      <!-- Display the data as a table -->
       <thead>
         <tr>
           <th>Währung</th>

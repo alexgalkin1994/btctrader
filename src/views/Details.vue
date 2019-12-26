@@ -1,6 +1,5 @@
 <template>
   <div class="details">
-    <!-- <div class="title">Details</div> -->
     <div class="content">
       <!-- loop over stats array to get all the avaiable stats -->
       <DetailContainer
@@ -85,6 +84,7 @@ export default {
             const hashrateRes = responses[4];
             const getdifficultyRes = responses[5];
 
+            // API returns data in Satoshi instead of BTC, we have to divide it
             const satoshi = 100000000;
             this.details[0].amount =
               marketcapRes.data.toLocaleString() + " EUR";
@@ -109,6 +109,7 @@ export default {
     this.pollData();
   },
   beforeDestroy() {
+    // Dont poll data after leaving the view
     this.stopPolling = true;
   }
 };

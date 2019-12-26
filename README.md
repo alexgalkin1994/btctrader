@@ -1,3 +1,3 @@
-# btctrader
+# BTCtrader
 
-BTC tracker/stat application
+BTC tracker/stat application made with Vue.js

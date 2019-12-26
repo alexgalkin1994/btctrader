@@ -4,13 +4,15 @@
       <span class="price">Hallo, {{ userFirstName }}!</span>
     </div>
 
+    <!-- Balance view serves as a button to add and remove btc -->
     <Balance
       @click.native="$router.push({ path: 'mybitcoin' })"
       v-if="!loading"
       :curr_price="buy_price"
       class="balance"
     />
-    <!-- <BuySell :curr_buy_price="buy_price" :curr_sell_price="sell_price" /> -->
+
+    <!-- Table for current btc prices -->
     <PriceOverview class="price-overview" :currentPrices="currentPrices" />
   </div>
 </template>
@@ -60,11 +62,13 @@ export default {
     }
   },
   created() {
+    // Get user data
     this.pollData();
     const user = JSON.parse(localStorage.getItem("user"));
     this.userFirstName = user.firstName;
   },
   beforeDestroy() {
+    // Dont poll after leaving view
     this.stopPolling = true;
   }
 };

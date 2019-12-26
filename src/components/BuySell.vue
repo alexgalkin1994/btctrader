@@ -17,8 +17,6 @@
       <span>BTC</span>
       <span class="fuer">für</span>
 
-      <!-- <img class="swap-icon" src="../assets/swap.svg" alt srcset /> -->
-
       <div class="value-in-fiat">{{ action_buy_price_eur }} EUR</div>
       <a class="buy-button button" href="#">Kaufen</a>
     </div>

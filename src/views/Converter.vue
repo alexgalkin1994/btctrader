@@ -9,6 +9,7 @@
         @input="searchTimeOut"
         type="text"
       />
+      <!-- Select currency -->
       <div class="select-dropdown">
         <select @change="searchTimeOut" v-model="selected">
           <option value="EUR" selected>EUR</option>

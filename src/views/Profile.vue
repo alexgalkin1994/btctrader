@@ -34,16 +34,19 @@ export default {
     };
   },
   methods: {
+    // Update the profile
     updateProfile() {
       localStorage.setItem("user", JSON.stringify(this.user));
       this.updated = true;
       setTimeout(this.closeNotification, 5000);
     },
+    // Close notification
     closeNotification() {
       this.updated = false;
     }
   },
   created() {
+    // Prefill data fields
     const user = JSON.parse(localStorage.getItem("user")) || {};
     this.user = user;
   }

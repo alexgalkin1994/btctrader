@@ -167,6 +167,7 @@ export default {
   components: { ScatterChart },
   methods: {
     getDiagram() {
+      // Set chart label
       this.chartDataLoaded = false;
       if (this.stat === "market-price") {
         this.chartData.datasets[0].label = "Marktpreis (USD)";
@@ -182,6 +183,7 @@ export default {
         this.chartData.datasets[0].label = "Schwierigkeitsgrad";
       }
 
+      // Get chart data from API
       axios
         .get(
           `https://api.blockchain.info/charts/${this.stat}?timespan=${this.timespan}&cors=true`
@@ -189,6 +191,7 @@ export default {
         .then(response => {
           const data = response.data.values;
           this.chartData.datasets[0].data = data;
+          // Convert unix timestamp in readable time
           this.minTime = moment
             .unix(this.chartData.datasets[0].data[0].x)
             .format("DD-MM-YYYY");
@@ -200,8 +203,7 @@ export default {
         })
         .catch(function(error) {
           console.log(error);
-        })
-        .finally(function() {});
+        });
     }
   },
   data() {
@@ -210,6 +212,7 @@ export default {
       timespan: "30days",
       rollingAverage: "24hours",
       chartDataLoaded: false,
+
       chartData: {
         datasets: [
           {

@@ -9,10 +9,12 @@
         type="text"
       />
       <span class="btc-label">BTC</span>
+
       <div class="buttons">
         <a class="add-button button" @click="addToWallet">Hinzufügen</a>
         <a class="remove-button button" @click="removeFromWallet">Entfernen</a>
       </div>
+
       <transition name="slide-fade">
         <div class="notification" v-if="just_added || just_removed">
           <a class="close-button" @click="closeNotification()">

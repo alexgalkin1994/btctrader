@@ -30,6 +30,7 @@ export default {
     localizedBTC() {
       const zero = 0;
 
+      // If the user never added anything to his account
       if (this.currentBTCBalance === null) {
         return zero.toLocaleString(undefined, {
           minimumFractionDigits: 2,
@@ -41,6 +42,7 @@ export default {
         maximumFractionDigits: 2
       });
     },
+    // Calculate the current btc EUR price
     currentEURPrice() {
       const BTCamount = localStorage.getItem("wallet");
       this.currentBTCBalance = BTCamount;
@@ -58,6 +60,7 @@ export default {
   },
   computed: {},
   watch: {
+    // Watch for changes in price to update balance
     curr_price(newPrice, oldPrice) {
       const BTCamount = localStorage.getItem("wallet");
       this.currentBTCBalance = BTCamount;
