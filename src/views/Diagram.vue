@@ -1,10 +1,23 @@
 <template>
   <div v-if="chartDataLoaded" class="content">
-    <scatter-chart
-      class="chart"
-      :chartdata="chartData"
-      :options="options"
-    />
+    <div class="filter">
+      <div class="stat option-to-select">
+        <span>Stat:</span>
+        <div class="select-dropdown">
+          <select @change="getDiagram" v-model="stat">
+            <option value="market-price" selected>Marktpreis(USD)</option>
+            <option value="total-bitcoins"
+              >Gesamtzahl der Bitcoins im Umlauf</option
+            >
+            <option value="n-transactions">Anzahl von Transaktionen</option>
+            <option value="market-cap">Marktkapitalisierung</option>
+            <option value="hash-rate">Hashwert</option>
+            <option value="difficulty">Schwierigkeitsgrad</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <scatter-chart class="chart" :chartData="chartData" :options="options" />
   </div>
 </template>
 
@@ -16,11 +29,38 @@ import moment from "moment";
 export default {
   name: "Diagrams",
   components: { ScatterChart },
+  methods: {
+    getDiagram() {
+      this.chartDataLoaded = false;
+      axios
+        .get(
+          `https://api.blockchain.info/charts/${this.stat}?timespan=${this.timespan}&rollingAverage=${this.rollingAverage}&cors=true`
+        )
+        .then(response => {
+          const data = response.data.values;
+          this.chartData.datasets[0].data = data;
+          this.minTime = moment
+            .unix(this.chartData.datasets[0].data[0].x)
+            .format("DD-MM-YYYY");
+          this.chartData.datasets[0].data.forEach(element => {
+            element.x = moment.unix(element.x).format("DD-MM-YYYY");
+          });
+
+          this.chartDataLoaded = true;
+        })
+        .catch(function(error) {
+          console.log(error);
+        })
+        .finally(function() {});
+    }
+  },
   data() {
     return {
+      stat: "market-price",
+      timespan: "365days",
+      rollingAverage: "24hours",
       chartDataLoaded: false,
       chartData: {
-        
         datasets: [
           {
             label: "Bitcoin Price",
@@ -39,7 +79,6 @@ export default {
         scales: {
           yAxes: [
             {
-              
               ticks: {
                 beginAtZero: false,
                 fontColor: "#f1faff",
@@ -47,27 +86,29 @@ export default {
               }
             }
           ],
-          xAxes: [{
-            distribution: 'series',
-            unit: 'day',
-            unitStepSize: 1,
-            ticks: {
-              fontColor: "#f1faff",
-            },
-            type:       "time",
-            time:{
-              format: "DD-MM-YYYY",
-              tooltipFormat: 'll',
-              autoSkip: true,
-              maxTicksLimit: 12
-            },
-            bounds: "data",
-            scaleLabel: {
-              display:     true,
-              labelString: 'Date',
-              fontColor: "#f1faff"
+          xAxes: [
+            {
+              distribution: "series",
+              unit: "day",
+              unitStepSize: 1,
+              ticks: {
+                fontColor: "#f1faff"
+              },
+              type: "time",
+              time: {
+                format: "DD-MM-YYYY",
+                tooltipFormat: "ll",
+                autoSkip: true,
+                maxTicksLimit: 12
+              },
+              bounds: "data",
+              scaleLabel: {
+                display: true,
+                labelString: "Date",
+                fontColor: "#f1faff"
+              }
             }
-          }]
+          ]
         }
       }
     };
@@ -80,21 +121,19 @@ export default {
       .then(response => {
         const data = response.data.values;
         this.chartData.datasets[0].data = data;
-        this.minTime = moment.unix(this.chartData.datasets[0].data[0].x).format('DD-MM-YYYY');
-        console.log(this.minTime)
+        this.minTime = moment
+          .unix(this.chartData.datasets[0].data[0].x)
+          .format("DD-MM-YYYY");
         this.chartData.datasets[0].data.forEach(element => {
-          element.x = moment.unix(element.x).format('DD-MM-YYYY');
+          element.x = moment.unix(element.x).format("DD-MM-YYYY");
         });
-        
+
         this.chartDataLoaded = true;
       })
       .catch(function(error) {
-        // handle error
         console.log(error);
       })
-      .finally(function() {
-        // always executed
-      });
+      .finally(function() {});
   }
 };
 </script>
@@ -108,5 +147,13 @@ export default {
 .content {
   height: 100%;
   width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+}
+.filter {
+}
+
+.option-to-select {
+  display: flex;
 }
 </style>

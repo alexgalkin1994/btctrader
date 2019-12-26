@@ -3,11 +3,11 @@
     <transition-group name="fade" mode="out-in">
       <div key="1" class="title">Kontostand</div>
       <div key="2" class="amount-in-fiat">
-        {{currentEURBalance}}
+        {{ currentEURBalance }}
         <span key="3" class="muted">EUR</span>
       </div>
       <div key="4" class="amount-in-btc">
-        {{localizedBTC()}}
+        {{ localizedBTC() }}
         <span key="5" class="muted">BTC</span>
       </div>
     </transition-group>
@@ -112,7 +112,7 @@ $muted-text-color: rgba(
 
 .amount-in-fiat {
   font-size: 3rem;
-  text-shadow: 3px 2px 0px #ef7ec4;
+  //text-shadow: 3px 2px 0px #ef7ec4;
   font-weight: bold;
 }
 
