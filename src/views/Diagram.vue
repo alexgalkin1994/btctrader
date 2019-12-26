@@ -1,23 +1,147 @@
 <template>
-  <div v-if="chartDataLoaded" class="content">
+  <div v-if="chartDataLoaded" class="diagram-content">
+    <scatter-chart class="chart" :chartData="chartData" :options="options" />
     <div class="filter">
-      <div class="stat option-to-select">
-        <span>Stat:</span>
-        <div class="select-dropdown">
-          <select @change="getDiagram" v-model="stat">
-            <option value="market-price" selected>Marktpreis(USD)</option>
-            <option value="total-bitcoins"
-              >Gesamtzahl der Bitcoins im Umlauf</option
-            >
-            <option value="n-transactions">Anzahl von Transaktionen</option>
-            <option value="market-cap">Marktkapitalisierung</option>
-            <option value="hash-rate">Hashwert</option>
-            <option value="difficulty">Schwierigkeitsgrad</option>
-          </select>
-        </div>
+      <div class="stat-options option-to-select">
+        <label
+          ><input
+            type="radio"
+            id="market-price"
+            value="market-price"
+            v-model="stat"
+            @change="getDiagram"
+          />
+          <span class="radio-span">Marktpreis (USD)</span>
+        </label>
+
+        <label
+          ><input
+            type="radio"
+            id="total-bitcoins"
+            value="total-bitcoins"
+            v-model="stat"
+            @change="getDiagram"
+          />
+          <span class="radio-span"
+            >Gesamtzahl der Bitcoins im Umlauf</span
+          ></label
+        >
+
+        <label
+          ><input
+            type="radio"
+            id="n-transactions"
+            value="n-transactions"
+            v-model="stat"
+            @change="getDiagram"
+          />
+          <span class="radio-span">Anzahl von Transaktionen</span></label
+        >
+
+        <label
+          ><input
+            type="radio"
+            id="market-cap"
+            value="market-cap"
+            v-model="stat"
+            @change="getDiagram"
+          />
+          <span class="radio-span">Marktkapitalisierung</span></label
+        >
+
+        <label
+          ><input
+            type="radio"
+            id="hash-rate"
+            value="hash-rate"
+            v-model="stat"
+            @change="getDiagram"
+          />
+          <span class="radio-span">Hashwert</span></label
+        >
+
+        <label>
+          <input
+            type="radio"
+            id="difficulty"
+            value="difficulty"
+            v-model="stat"
+            @change="getDiagram"
+          />
+          <span class="radio-span" for="difficulty"
+            >Schwierigkeitsgrad</span
+          ></label
+        >
+      </div>
+
+      <div class="timespan-options option-to-select">
+        <label
+          ><input
+            type="radio"
+            id="30days"
+            value="30days"
+            v-model="timespan"
+            @change="getDiagram"
+          />
+          <span class="radio-span">30 Tage</span>
+        </label>
+
+        <label
+          ><input
+            type="radio"
+            id="60days"
+            value="60days"
+            v-model="timespan"
+            @change="getDiagram"
+          />
+          <span class="radio-span">60 Tage</span>
+        </label>
+
+        <label
+          ><input
+            type="radio"
+            id="180days"
+            value="180days"
+            v-model="timespan"
+            @change="getDiagram"
+          />
+          <span class="radio-span">180 Tage</span>
+        </label>
+
+        <label
+          ><input
+            type="radio"
+            id="1year"
+            value="1year"
+            v-model="timespan"
+            @change="getDiagram"
+          />
+          <span class="radio-span">1 Jahr</span>
+        </label>
+
+        <label
+          ><input
+            type="radio"
+            id="2years"
+            value="2years"
+            v-model="timespan"
+            @change="getDiagram"
+          />
+          <span class="radio-span">2 Jahre</span>
+        </label>
+
+        <label
+          ><input
+            type="radio"
+            id="all"
+            value="all"
+            v-model="timespan"
+            @change="getDiagram"
+          />
+          <span class="radio-span">Gesamt</span>
+        </label>
       </div>
     </div>
-    <scatter-chart class="chart" :chartData="chartData" :options="options" />
   </div>
 </template>
 
@@ -32,13 +156,28 @@ export default {
   methods: {
     getDiagram() {
       this.chartDataLoaded = false;
+      if (this.stat === "market-price") {
+        this.chartData.datasets[0].label = "Marktpreis (USD)";
+      } else if (this.stat === "total-bitcoins") {
+        this.chartData.datasets[0].label = "Gesamtzahl der Bitcoins im Umlauf";
+      } else if (this.stat === "n-transactions") {
+        this.chartData.datasets[0].label = "Anzahl der Transaktionen per Tag";
+      } else if (this.stat === "market-cap") {
+        this.chartData.datasets[0].label = "Marktkapitalisierung";
+      } else if (this.stat === "hash-rate") {
+        this.chartData.datasets[0].label = "Hashwert";
+      } else if (this.stat === "difficulty") {
+        this.chartData.datasets[0].label = "Schwierigkeitsgrad";
+      }
+
       axios
         .get(
-          `https://api.blockchain.info/charts/${this.stat}?timespan=${this.timespan}&rollingAverage=${this.rollingAverage}&cors=true`
+          `https://api.blockchain.info/charts/${this.stat}?timespan=${this.timespan}&cors=true`
         )
         .then(response => {
           const data = response.data.values;
           this.chartData.datasets[0].data = data;
+          console.log(this.chartData.datasets);
           this.minTime = moment
             .unix(this.chartData.datasets[0].data[0].x)
             .format("DD-MM-YYYY");
@@ -57,13 +196,13 @@ export default {
   data() {
     return {
       stat: "market-price",
-      timespan: "365days",
+      timespan: "30days",
       rollingAverage: "24hours",
       chartDataLoaded: false,
       chartData: {
         datasets: [
           {
-            label: "Bitcoin Price",
+            label: "Marktpreis(USD)",
             data: [],
             backgroundColor: ["rgba(239, 126, 196, 0.2)"],
             borderColor: ["rgba(239, 126, 196, 1)"],
@@ -76,30 +215,37 @@ export default {
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        legend: {
+          labels: {
+            fontColor: "#f1faff"
+          }
+        },
         scales: {
           yAxes: [
             {
               ticks: {
                 beginAtZero: false,
-                fontColor: "#f1faff",
-                min: 0
+                fontColor: "#f1faff"
               }
             }
           ],
           xAxes: [
             {
               distribution: "series",
-              unit: "day",
-              unitStepSize: 1,
+
               ticks: {
                 fontColor: "#f1faff"
               },
               type: "time",
               time: {
                 format: "DD-MM-YYYY",
+                unit: "day",
+                displayFormats: {
+                  day: "DD MMM YYYY"
+                },
                 tooltipFormat: "ll",
                 autoSkip: true,
-                maxTicksLimit: 12
+                maxTicksLimit: 1
               },
               bounds: "data",
               scaleLabel: {
@@ -114,46 +260,46 @@ export default {
     };
   },
   created() {
-    axios
-      .get(
-        "https://api.blockchain.info/charts/market-price?timespan=365days&rollingAverage=24hours&format=json&cors=true"
-      )
-      .then(response => {
-        const data = response.data.values;
-        this.chartData.datasets[0].data = data;
-        this.minTime = moment
-          .unix(this.chartData.datasets[0].data[0].x)
-          .format("DD-MM-YYYY");
-        this.chartData.datasets[0].data.forEach(element => {
-          element.x = moment.unix(element.x).format("DD-MM-YYYY");
-        });
-
-        this.chartDataLoaded = true;
-      })
-      .catch(function(error) {
-        console.log(error);
-      })
-      .finally(function() {});
+    this.getDiagram();
   }
 };
 </script>
 
-<style>
+<style scoped lang="scss">
+$text-color: #f1faff;
+$background-color: #262640;
+$muted-text-color: rgba(
+  $color: $text-color,
+  $alpha: 0.7
+);
+
+.wrapper {
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
 .chart {
   width: 100%;
   height: 100%;
 }
 
-.content {
+.diagram-content {
   height: 100%;
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 3fr;
+  grid-template-rows: 1fr 100px;
+  margin-top: 3rem;
 }
 .filter {
+  margin-top: 1rem;
 }
 
 .option-to-select {
   display: flex;
+  justify-content: space-between;
+}
+
+.stat-options {
+  margin-bottom: 2rem;
 }
 </style>

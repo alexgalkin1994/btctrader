@@ -30,8 +30,10 @@ export default {
 <style scoped lang="scss">
 .table-content {
   height: 250px;
+  width: 100%;
   position: relative;
   overflow: auto;
+  height: 100%;
 }
 table {
   border-collapse: collapse;
@@ -39,6 +41,8 @@ table {
   border-radius: 10px 10px 0 0;
   overflow: hidden;
   text-align: center;
+  width: 100%;
+  height: 100%;
 
   thead {
   }
@@ -53,7 +57,6 @@ table {
   }
 
   tbody tr {
-    cursor: pointer;
     z-index: 1;
 
     transition: all 0.3s;
@@ -64,16 +67,6 @@ table {
 
     &:last-of-type {
       border-bottom: 3px solid rgba($color: #ffffff, $alpha: 0.3);
-    }
-    &:hover {
-      //   background-image: linear-gradient(
-      //     320deg,
-      //     rgba($color: #7a4bfd, $alpha: 0.2) 0%,
-      //     rgba($color: #ef7ec4, $alpha: 0.2) 80%
-      //   );
-      z-index: -1;
-      height: calc(100%-2px);
-      transform: translateY(-2px);
     }
   }
 

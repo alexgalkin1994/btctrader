@@ -201,4 +201,61 @@ input[type="text"] {
     box-shadow: 2px 4px 4px rgba($color: #0e0e0e, $alpha: 0.5);
   }
 }
+
+.select-dropdown {
+  position: relative;
+  background-color: $background-color;
+  width: auto;
+  float: left;
+  max-width: 100%;
+  select {
+    font-size: 3rem;
+    max-width: 100%;
+    color: $text-color;
+    font-weight: bold;
+    padding: 8px 24px 8px 10px;
+    border: none;
+    background-color: transparent;
+    appearance: none;
+    &:active,
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+  }
+  &:after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    margin-top: -2px;
+    right: 8px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid $text-color;
+  }
+}
+
+.radio-span {
+  color: $text-color;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  &:hover {
+    background-color: rgba($color: #7a4bfd, $alpha: 0.5);
+  }
+}
+
+input {
+  display: none;
+}
+
+input:checked + .radio-span {
+  background: #7a4bfd;
+  color: $text-color;
+}
 </style>

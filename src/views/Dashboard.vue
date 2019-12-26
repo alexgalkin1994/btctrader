@@ -3,16 +3,15 @@
     <div v-if="!loading" class="greeting">
       <span class="price">Hallo, {{ userFirstName }}!</span>
     </div>
-    <div class="overview">
-      <Balance
-        @click.native="$router.push({ path: 'mybitcoin' })"
-        v-if="!loading"
-        :curr_price="buy_price"
-        class="balance"
-      />
-      <!-- <BuySell :curr_buy_price="buy_price" :curr_sell_price="sell_price" /> -->
-      <PriceOverview :currentPrices="currentPrices" />
-    </div>
+
+    <Balance
+      @click.native="$router.push({ path: 'mybitcoin' })"
+      v-if="!loading"
+      :curr_price="buy_price"
+      class="balance"
+    />
+    <!-- <BuySell :curr_buy_price="buy_price" :curr_sell_price="sell_price" /> -->
+    <PriceOverview class="price-overview" :currentPrices="currentPrices" />
   </div>
 </template>
 
@@ -74,8 +73,19 @@ export default {
 <style lang="scss" scoped>
 .home {
   width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-areas:
+    "greeting price-overview price-overview price-overview"
+    "balance price-overview price-overview price-overview";
+}
+
+.price-overview {
+  grid-area: price-overview;
+  margin: 65px 0px;
 }
 .greeting {
+  grid-area: greeting;
   margin: 65px 0px;
 
   span {
@@ -89,11 +99,11 @@ export default {
 }
 
 .overview {
-  display: flex;
 }
 
 .balance {
   margin-right: 70px;
+  grid-area: balance;
 }
 
 .loading-money {
