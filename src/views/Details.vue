@@ -7,6 +7,7 @@
         v-for="detail in details"
         :key="detail.id"
         :detail="detail"
+        @click.native="$router.push({ name: 'diagram' })"
       />
     </div>
   </div>

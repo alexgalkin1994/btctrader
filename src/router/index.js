@@ -32,7 +32,8 @@ const routes = [
   {
     path: "/diagram",
     name: "diagram",
-    component: () => import("../views/Diagram.vue")
+    component: () => import("../views/Diagram.vue"),
+    props: true
   },
   {
     path: "/mybitcoin",

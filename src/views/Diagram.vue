@@ -189,7 +189,6 @@ export default {
         .then(response => {
           const data = response.data.values;
           this.chartData.datasets[0].data = data;
-          console.log(this.chartData.datasets);
           this.minTime = moment
             .unix(this.chartData.datasets[0].data[0].x)
             .format("DD-MM-YYYY");

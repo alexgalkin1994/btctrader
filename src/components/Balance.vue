@@ -30,7 +30,6 @@ export default {
     localizedBTC() {
       const zero = 0;
 
-      console.log(this.curr_price, this.currentBTCBalance);
       if (this.currentBTCBalance === null) {
         return zero.toLocaleString(undefined, {
           minimumFractionDigits: 2,
@@ -61,7 +60,6 @@ export default {
   watch: {
     curr_price(newPrice, oldPrice) {
       const BTCamount = localStorage.getItem("wallet");
-      console.log("nbtc", BTCamount);
       this.currentBTCBalance = BTCamount;
 
       let currEURPrice = BTCamount * parseFloat(newPrice);
