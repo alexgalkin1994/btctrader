@@ -69,7 +69,8 @@ $muted-text-color: rgba(
   padding: 0;
   height: 100%;
   width: 18rem;
-  overflow: scroll;
+  overflow-y: auto;
+  overflow-x: hidden;
   font-size: 1rem;
   font-weight: 400;
   background-color: rgba($color: #ffffff, $alpha: 0.05);
